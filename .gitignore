@@ -79,7 +79,6 @@ nb-configuration.xml
 *.tfstate
 *.tfstate.*
 
-
 # Crash log files
 crash.log
 
