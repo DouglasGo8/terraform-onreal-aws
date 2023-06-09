@@ -1,0 +1,25 @@
+= Terraform on AWS w/ SRE & EKS SRE over IaC
+
+== Links
+
+- https://github.com/stacksimplify/terraform-on-aws-ec2[Terraform on AWS EC2]
+- https://github.com/stacksimplify/terraform-on-aws-eks[Terraform on AWS EKS]
+- https://discuss.hashicorp.com/t/error-configuring-terraform-aws-provider-no-valid-credential-sources-for-terraform-aws-provider-found/35708/2[Error configuring Terraform AWS Provider: Downgrade TF Version]
+- https://registry.terraform.io/browse/providers[Terraform providers]
+
+== Terraform Flow
+
+[source,bash]
+----
+terraform init
+terraform validate
+terraform plan
+terraform plan -destroy
+terraform apply
+terraform destroy
+----
+
+=== Terraform Block
+
+* Special block used to configure some _behaviors_
+* Within a terraform block, *_only constant values can be used_*; arguments may not refer to named objects such as resources, input variables, etc, and may not use any of the Terraform language built-in functions
