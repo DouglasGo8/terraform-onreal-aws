@@ -5,10 +5,18 @@ variable "AMI_OWNERS" {
 
 variable "PUB_SUBNET_1" {
   type    = string
-  default = "subnet-0cb4ca829c6b717b3"
+  default = "subnet-07c99fd8fbb0c959e"
 }
 
 variable "SG_SSH" {
   type    = string
-  default = "sg-001dd6fa41ef4df90"
+  default = "sg-06dcb8d5501a0dc45"
+}
+
+variable "AWS_REGION" {
+  default = "sa-east-1"
+}
+
+variable "AWS_PROFILE" {
+  default = "default"
 }
