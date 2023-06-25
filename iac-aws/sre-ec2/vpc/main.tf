@@ -3,12 +3,12 @@ module "vpc" {
   version = "5.0.0"
 
   # VPC Details
-  name            = "${local.name}-${var.PROJECT_NAME}"
+  name            = "${local.name}-${var.VPC_NAME}"
   cidr            = var.VPC_CIDR_BLOCK
   # reduce cost
   azs             = var.ZONES_ID
-  public_subnets  = var.VPC_PUBLIC_SUBNET_CIDR
-  private_subnets = var.VPC_PRIVATE_SUBNET_CIDR
+  public_subnets  = var.VPC_PUBLIC_SUBNETS_CIDR
+  private_subnets = var.VPC_PRIVATE_SUBNETS_CIDR
 
   # Database subnets
   database_subnets                   = var.VPC_DATABASE_SUBNETS

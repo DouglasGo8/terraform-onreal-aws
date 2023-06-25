@@ -7,11 +7,13 @@ terraform {
       #version = "~> 4.2.0"
       #version = "~> 5.1.0"
     }
+    null = {
+      source = "hashicorp/null"
+    }
   }
 }
 
 provider "aws" {
-  region  = var.AWS_REGION
+  region = var.AWS_REGION
   # profile = default
-  profile = var.AWS_PROFILE
 }

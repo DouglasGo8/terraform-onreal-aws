@@ -9,7 +9,7 @@ variable "AWS_PROFILE" {
 }
 
 # Project wide variable
-variable "PROJECT_NAME" {
+variable "VPC_NAME" {
   type    = string
   default = "main-vpc"
 }
@@ -19,11 +19,10 @@ variable "ENVIRONMENT" {
   default = "dev"
 }
 
-variable "BUZZ_DIVISION" {
+variable "ORG_TEAM" {
   type    = string
-  default = "TECH-ARCH"
+  default = "ARCH_CLOUD"
 }
-
 
 variable "VPC_CIDR_BLOCK" {
   type    = string
@@ -35,12 +34,12 @@ variable "ZONES_ID" {
   default = ["sa-east-1a", "sa-east-2b"]
 }
 
-variable VPC_PUBLIC_SUBNET_CIDR {
+variable VPC_PUBLIC_SUBNETS_CIDR {
   type    = list(string)
   default = ["10.0.101.0/24", "10.0.102.0/24"]
 }
 
-variable VPC_PRIVATE_SUBNET_CIDR {
+variable VPC_PRIVATE_SUBNETS_CIDR {
   type    = list(string)
   default = ["10.0.1.0/24", "10.0.2.0/24"]
 }
@@ -61,13 +60,15 @@ variable "VPC_CREATE_DB_SUBNET_ROUTE_TABLE" {
 }
 
 variable "VPC_ENABLE_NAT_GATEWAY" {
-  type    = bool
-  default = true
+  description = "Enable NAT Gateways for Private Subnets Outbound Communication"
+  type        = bool
+  default     = true
 }
 
 variable "VPC_IS_SINGLE_NAT_GATEWAY" {
-  type    = bool
-  default = true
+  description = "Enable only single NAT Gateway in one Availability Zone to save costs"
+  type        = bool
+  default     = true
 }
 
 variable "VPC_ENABLE_DNS_HOST_NAMES" {

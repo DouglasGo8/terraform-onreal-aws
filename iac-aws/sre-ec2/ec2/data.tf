@@ -1,29 +1,20 @@
-data "aws_ami" "ubuntu" {
+data "aws_ami" "amzlinux2" {
   most_recent = true
-
+  owners      = ["amazon"]
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["amzn2-ami-hvm-*-gp2"]
   }
-
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-
   filter {
     name   = "architecture"
     values = ["x86_64"]
   }
-
-  owners = var.AMI_OWNERS # Canonical
-}
-
-
-data "aws_security_group" "ssh" {
-  id = var.SG_SSH
-}
-
-data "aws_subnet" "main-public-1" {
-  id = var.PUB_SUBNET_1
 }

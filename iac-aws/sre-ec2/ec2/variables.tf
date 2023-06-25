@@ -1,22 +1,25 @@
-variable "AMI_OWNERS" {
-  type    = list(string)
-  default = ["099720109477"]
+variable "ENVIRONMENT" {
+  type    = string
+  default = "dev"
 }
 
-variable "PUB_SUBNET_1" {
+variable "ORG_TEAM" {
   type    = string
-  default = "subnet-07c99fd8fbb0c959e"
-}
-
-variable "SG_SSH" {
-  type    = string
-  default = "sg-06dcb8d5501a0dc45"
+  default = "ARCH_CLOUD"
 }
 
 variable "AWS_REGION" {
+  type    = string
   default = "sa-east-1"
 }
 
-variable "AWS_PROFILE" {
-  default = "default"
+variable "AWS_INSTANCE_TYPE" {
+  type    = string
+  default = "t3.micro"
 }
+
+variable "AWS_INSTANCE_KEY_PAIR_PEM" {
+  type    = string
+  default = "sign-key-pub"
+}
+
