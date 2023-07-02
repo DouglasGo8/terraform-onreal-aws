@@ -17,7 +17,6 @@ module "ec2_bastion_instance" {
   #monitoring             = true
   subnet_id              = "data.subnet_public.id###MUST_BE_IMPLEMENTED####"
   vpc_security_group_ids = [module.bastion_sg.security_group_id]
-  user_data              = file("${path.module}/httpd.sh")
   #
   tags                   = local.common_tags
 }

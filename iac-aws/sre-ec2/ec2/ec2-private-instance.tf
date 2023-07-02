@@ -17,6 +17,7 @@ module "ec2_private_instance" {
   #monitoring             = true
   subnet_id              = "data.sub_net_private.id###MUST_BE_IMPLEMENTED####"
   vpc_security_group_ids = [module.private_sg.security_group_id]
+  user_data              = file("${path.module}/httpd.sh")
   #
   tags                   = local.common_tags
 }
