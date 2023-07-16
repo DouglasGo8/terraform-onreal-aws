@@ -12,7 +12,7 @@ module "application-elb" {
     {
       port               = 80
       protocol           = "HTTP"
-      target_group_index = 0
+      target_group_index = 0 # TG Index = 0
     }
   ]
   # Target Groups
