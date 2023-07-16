@@ -1,10 +1,10 @@
-module "classic_elb_http_sg" {
+module "application_elb_http_sg" {
   # https://registry.terraform.io/modules/terraform-aws-modules/security-group/aws/latest/examples/complete
   source                   = "terraform-aws-modules/security-group/aws"
   version                  = "5.0.0"
   #
   name                     = "loadbalancer-sg"
-  description              = "SSH & HTTP port open for entire Internet"
+  description              = "Security Group with HTTP open for entire Internet (IPv4 CIDR), egress ports are all world open"
   # main_vpc
   vpc_id                   = "data.vpc_id" #module.vpc.vpc_id
   # ingress rules based on types over aws console

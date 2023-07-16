@@ -200,5 +200,13 @@ output "output_v1_5" {
 
 === VPC 3tier Terraform Project
 
+.Execution Order *.tf files
+[source,html]
+----
+1. vpc
+2. ec2
+3. elb/alb
+----
+
 .VPC 3tier Terraform Project
 image::thumbs/vpc_3tier_app_project.png[]
