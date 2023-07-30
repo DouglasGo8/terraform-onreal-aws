@@ -210,3 +210,5 @@ output "output_v1_5" {
 
 .VPC 3tier Terraform Project
 image::thumbs/vpc_3tier_app_project.png[]
+
+

@@ -1,4 +1,4 @@
-module "application-elb" {
+module "application-alb" {
   source             = "terraform-aws-modules/alb/aws"
   version            = "8.7.0"
   name               = "${local.name}-application-elb-http"
@@ -6,13 +6,15 @@ module "application-elb" {
   load_balancer_type = "application"
   vpc_id             = "data.vpc_id"
   subnets            = ["var.subnet_1.xxx", "var.subnet_2.yyy"]
-  security_groups    = [module.application_elb_http_sg.security_group_id] # bastion host
+  security_groups    = [module.application_alb_http_sg.security_group_id] # bastion host
   # Listeners
   http_tcp_listeners = [
     {
       port               = 80
       protocol           = "HTTP"
       target_group_index = 0 # TG Index = 0
+      // redirect to 443
+      #action_type = "redirect"
     }
   ]
   # Target Groups
@@ -50,6 +52,8 @@ module "application-elb" {
       tags = local.common_tags # Target Group Tags
     }
   ]
+
+  # http_listener_rules /app1/*
 
   tags = local.common_tags
 }
