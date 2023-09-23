@@ -257,11 +257,21 @@ module "ec2_private_app3" {
 
 ----
 
-* Rules priority for 3 Listener Rules
+* Rules priority for three Listener Rules
 
 . /app1:* priority = 1
 . /app2:* priority = 2
 . (root context)/:* priority = 3
 
+=== AWS Autoscaling Group
 
-=== AWS Autoscaling
+* ASG with Launch Configuration
+* ASG Instance Refresh
+* ASG Lifecycle Hooks
+* ASG Target Tracking Scaling Policies (TTPS), works similar cloudwatch alarms, some dynamic decision to an auto-scale the group
+* ASG Scheduled Actions
+* ASG Notifications
+* ASG Autoscaling Tests
+
+.AWS ASG Template and TF.*
+image::thumbs/tf_asg_templates.png[]
