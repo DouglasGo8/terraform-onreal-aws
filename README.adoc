@@ -275,3 +275,31 @@ module "ec2_private_app3" {
 
 .AWS ASG Template and TF.*
 image::thumbs/tf_asg_templates.png[]
+
+[source, hcl-terraform]
+----
+resource "aws_autoscaling_group" "asg1" {
+  name_prefix = "myasg-"
+  desired_capacity = 2
+  max_size = 10
+  min_size = 2
+  vpc_zone_identifier = module.vpc.private_subnets
+  target_group_arns =  module.alb.target_group_arns # id
+  health_check_type = "EC2"
+  launch_template {
+    id = aws_launch_template.my_launch_template.id
+    version = aws_launch_template.my_launch_template.latest_version
+  }
+  # Instance refresh
+  strategy = "Rolling"
+  preferences {
+    #instance_warmup = 300 def behavior is use asg health check
+  min_healthy_percentage = 50
+  }
+  triggers = ["desired_capacity"]
+  tag {
+    key = "key"
+    value = "value"
+  }
+}
+----
