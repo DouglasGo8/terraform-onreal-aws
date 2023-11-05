@@ -1,0 +1,32 @@
+= Terraform on AWS EKS Kubernetes IaC SRE
+
+== Links
+
+- AWS EKS
+- Quarkus
+- Terraform
+- https://camel.apache.org[Apache Camel]
+- https://github.com/stacksimplify/terraform-on-aws-eks[Git Repo Course]
+- https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli[Install Terraform MacOs]
+
+== _Section 01_
+
+* _Terraform Fundamentals_
+* _Kubernetes Fundamentals_
+* _AWS VPC 3-Tier Network_
+* _AWS EC2 Bastion Host in Public Subnet_
+* _AWS EKS Cluster - Public/Private Nodegroup_
+* _Kubernetes Deployment & Service using TF k8s Provider_
+* _Terraform Remote state storage using Key concept_
+* _EKS IRSA IAM Roles for K8s Service Accounts_
+* _Kubernetes Storage: EBS CSI_
+* _Kubernetes Storage: EBS EFS_
+* _EKS LoadBalancer Controller Ingress_
+* _EKS IAM and Fargate_
+* _Autoscaling HPA and VPA_
+* _EKS Monitoring and Logging Cloudwatch Agent + FluentBit_
+
+[source,bash]
+----
+aws s3api list-buckets
+----
