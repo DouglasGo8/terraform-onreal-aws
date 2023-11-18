@@ -9,7 +9,7 @@
 - https://registry.terraform.io/browse/providers[Terraform providers]
 - https://registry.terraform.io/browse/modules[Terraform Modules]
 - https://developer.hashicorp.com/terraform/language[Terraform Language Documentation]
-- https://registry.terraform.io/browse/modules[Terraform
+- https://registry.terraform.io/browse/modules[Terraform]
 
 == Terraform Flow
 

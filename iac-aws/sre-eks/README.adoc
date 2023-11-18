@@ -31,5 +31,48 @@
 aws s3api list-buckets
 ----
 
-.Apache Camel/Quarkus on AWS ECS e S3 File Process
+.Apache Camel/Quarkus on AWS ECS and S3 File Process
 image::../../thumbs/camel-s3-ecs-task-process.png[]
+
+== Terraform Command Basics
+
+* Terraform workflow
+
+[source,bash]
+----
+tf init
+tf validate
+tf plan
+tf apply
+tf destroy
+----
+
+[%header,cols=5*]
+|===
+
+|Init
+|Validate
+|Plan
+|Apply
+|Destroy
+
+|Used to initialize a working directory containing terraform config files, this command should be run after writing a new TF conf
+
+|Validates the terraform configurations files in that respective directory to ensure they are syntactically valid and internally consistent
+
+|Creates an execution plan TF that performs a refresh and determines what actions are necessary to achieve the desired state specified in conf files
+
+|Used to apply the changes required _to reach the desired state_ of the configuration, by default, apply scan the current directory for the configuration and
+apply the changes appropriately
+
+|Used to destroy the terraform managed infra, this will ask for confirmations before destroying
+
+|===
+
+.TF Log4 apply command
+image::../../thumbs/sre-eks/section02/basic-ec2instance.png[]
+
+
+link:../sre-eks/section02/ec2/instance.tf[EC2 AWS Intance SSH and HTTP on Public Subnet]
+
+
