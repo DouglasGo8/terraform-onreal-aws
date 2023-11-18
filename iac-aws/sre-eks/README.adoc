@@ -30,3 +30,6 @@
 ----
 aws s3api list-buckets
 ----
+
+.Apache Camel/Quarkus on AWS ECS e S3 File Process
+image::../../thumbs/camel-s3-ecs-task-process.png[]
