@@ -8,6 +8,7 @@
 - https://camel.apache.org[Apache Camel]
 - https://github.com/stacksimplify/terraform-on-aws-eks[Git Repo Course]
 - https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli[Install Terraform MacOs]
+- https://registry.terraform.io/namespaces/hashicorp[Hashicorp Cloud Providers Version]
 
 == _Section 01_
 
@@ -31,8 +32,27 @@
 aws s3api list-buckets
 ----
 
-.Apache Camel/Quarkus on AWS ECS and S3 File Process
-image::../../thumbs/camel-s3-ecs-task-process.png[]
+.Terraform Block (https://github.com/stacksimplify/terraform-on-aws-eks/tree/main/03-Terraform-Settings-Providers-Resources/terraform-manifests[Git hub link])
+[source,hcl-terraform]
+----
+terraform {
+  required_version = "~> 1.6.5"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.29"
+    }
+  }
+}
+
+provider "aws" {
+  region  = var.region
+  profile = var.profile
+}
+----
+
+.Apache Camel/Quarkus on AWS EKS Fargate and S3 File Process with terraform
+image::../../thumbs/common/camel-s3-ecs-task-process.png[]
 
 == Terraform Command Basics
 
@@ -65,14 +85,28 @@ tf destroy
 |Used to apply the changes required _to reach the desired state_ of the configuration, by default, apply scan the current directory for the configuration and
 apply the changes appropriately
 
-|Used to destroy the terraform managed infra, this will ask for confirmations before destroying
+|Destroy command in terraform managed infra, this will ask for confirmations before destroying
 
 |===
+
+- https://github.com/stacksimplify/terraform-on-aws-eks/tree/main/04-Terraform-Variables-and-Datasources[Github link EC2 Instance]
 
 .TF Log4 apply command
 image::../../thumbs/sre-eks/section02/basic-ec2instance.png[]
 
+link:../sre-eks/section02/ec2/instance.tf[EC2 AWS Instance SSH and HTTP on Public Subnet]
 
-link:../sre-eks/section02/ec2/instance.tf[EC2 AWS Intance SSH and HTTP on Public Subnet]
+image:../../thumbs/sre-eks/section03/ssh-ec2linux-console.png[]
+
+[source,bash]
+----
+ssh-keygen -f {{PEM_FILE}}.pem
+sudo ssh-keygen -e -m RFC4716 -f {{PEM_FILE}}.pem
+# external folder access
+sudo chmod 600 /path/{{PEM_FILE}}.pem
+sudo chmod 755 /path_of_pems
+ssh -i {{pem}} ec2-user@{{PUBLIC_IP}}|{{DNS_NAME}}
+ssh -i {{pem}} ubuntu@{{PUBLIC_IP}}|{{DNS_NAME}}
+----
 
 

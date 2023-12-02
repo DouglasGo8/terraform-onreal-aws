@@ -3,7 +3,6 @@
 == Links
 
 - https://github.com/stacksimplify/terraform-on-aws-ec2[Terraform on AWS EC2]
-- https://github.com/stacksimplify/terraform-on-aws-eks[Terraform on AWS EKS]
 - https://github.com/stacksimplify/hashicorp-certified-terraform-associate[Hashicorp Certified Terraform]
 - https://discuss.hashicorp.com/t/error-configuring-terraform-aws-provider-no-valid-credential-sources-for-terraform-aws-provider-found/35708/2[Error configuring Terraform AWS Provider: Downgrade TF Version]
 - https://registry.terraform.io/browse/providers[Terraform providers]
@@ -14,7 +13,7 @@
 == Terraform Flow
 
 .PEM Passphrase
-[source, html]
+[source,html]
 ----
 passphrase certsign
 ----
@@ -131,7 +130,7 @@ aws ec2 describe-instance-type-offerings --location-type availability-zone \
 ----
 
 .EC2 Describe Instance command
-image::thumbs/ec2_availability_in_specific_zone.png[]
+image::../../thumbs/sre-ec2/ec2_availability_in_specific_zone.png[]
 
 .Terraform Small Utility Project
 [source,hcl-terraform]
@@ -210,7 +209,7 @@ output "output_v1_5" {
 ----
 
 .VPC 3tier Terraform Project
-image::thumbs/vpc_3tier_app_project.png[]
+image::../../thumbs/sre-ec2/vpc_3tier_app_project.png[]
 
 [source,shellscript]
 ----
@@ -275,9 +274,9 @@ module "ec2_private_app3" {
 * ASG Autoscaling Tests
 
 .AWS ASG Template and tf.*
-image::thumbs/tf_asg_templates.png[]
+image::../../thumbs/sre-ec2/tf_asg_templates.png[]
 
-[source, hcl-terraform]
+[source,hcl-terraform]
 ----
 resource "aws_autoscaling_group" "asg1" {
   name_prefix = "myasg-"
@@ -306,7 +305,7 @@ resource "aws_autoscaling_group" "asg1" {
 ----
 
 .
-[source, hcl-terraform]
+[source,hcl-terraform]
 ----
 resource "aws_autoscaling_policy" "high_cpu" {
   name_prefix             = "high-cpu"
