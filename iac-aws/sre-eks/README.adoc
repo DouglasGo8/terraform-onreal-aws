@@ -65,6 +65,8 @@ tf validate
 tf plan
 tf apply
 tf destroy
+
+aws ec2 describe-images --owners amazon --filters "Name=name,Values=amzn*" --query 'sort_by(Images, &CreationDate)[].Name
 ----
 
 [%header,cols=5*]
@@ -91,7 +93,7 @@ apply the changes appropriately
 
 - https://github.com/stacksimplify/terraform-on-aws-eks/tree/main/04-Terraform-Variables-and-Datasources[Github link EC2 Instance]
 
-.TF Log4 apply command
+.TF Log4 Apply Command
 image::../../thumbs/sre-eks/section02/basic-ec2instance.png[]
 
 link:../sre-eks/section02/ec2/instance.tf[EC2 AWS Instance SSH and HTTP on Public Subnet]
@@ -103,10 +105,140 @@ image:../../thumbs/sre-eks/section03/ssh-ec2linux-console.png[]
 ssh-keygen -f {{PEM_FILE}}.pem
 sudo ssh-keygen -e -m RFC4716 -f {{PEM_FILE}}.pem
 # external folder access
+# ssh -i ../../../.secret/key.pem
+sudo chmod 400 /path/{{PEM_FILE}}.pem
 sudo chmod 600 /path/{{PEM_FILE}}.pem
 sudo chmod 755 /path_of_pems
 ssh -i {{pem}} ec2-user@{{PUBLIC_IP}}|{{DNS_NAME}}
 ssh -i {{pem}} ubuntu@{{PUBLIC_IP}}|{{DNS_NAME}}
 ----
 
+== Section05
 
+.List and Maps
+[source,hcl-terraform]
+----
+variable "my_list" {
+  type = list(string)
+  default = ["t3.micro", "t3.small"]
+}
+
+variable "my_map" {
+  type = map(string)
+  default = {
+    "dev" = "t3.micro"
+    "qa"  = "t3.small"
+    "prod" = "t3.large"
+  }
+}
+
+resource "my_instance" {
+  instance_type = var.my_list[1] # t3.small
+  instance_type = var.my_map["prod"] # t3.large
+
+  tags = {
+    name = "satanindepth-${count.index}"
+  }
+}
+----
+
+.Loops
+[source,hcl-terraform]
+----
+output "for_output_list" {
+  description = "For Loop with List"
+  value = [for inst in aws_instance.my_instance: inst.public_dns]
+}
+
+output "for_output_map1" {
+  description = "For Loop with Map"
+  value = {for inst in aws_instance.my_instance: inst.id => inst.public_dns}
+}
+
+output "for_output_map2" {
+  description = "For Loop with Map - Advanced"
+  value = {for c, inst in aws_instance.my_instance: c => inst.public_dns}
+}
+----
+
+.Datasources and for_each Meta-Argument
+[source,hcl-terraform]
+----
+data "aws_availability_zones" "zones" {
+  filter {
+    name = "opt-in-status"
+    values = ["opt-in-not-required"]
+  }
+}
+# data.aws_availability_zones.zones.names
+
+resource "my_instance" {
+  instance_type = var.my_list[1] # t3.small
+  instance_type = var.my_map["prod"] # t3.large
+  for_each = toset(data.aws_availability_zones.zones.names)
+  availability_zone = each.key
+  tags = {
+    name = "satanindepth-${each.key}"
+  }
+}
+
+output "for_output_list" {
+  description = "For Loop with List"
+  value = toset([for inst in aws_instance.my_instance: inst.public_ip])
+}
+
+output "for_output_map2" {
+  description = "For Loop with Map - Advanced"
+  value = tomap({for az, inst in aws_instance.my_instance: az => inst.public_dns})
+}
+----
+
+[source,bash]
+----
+aws ec2 describe-instance-type-offerings --location-type availability-zone --filters Name=instance-type,Values=t3.micro --region sa-east-1 --output table
+----
+
+.Datasource Filtering EC2 instances in Specific Zone (final sample)
+[source,hcl-terraform]
+----
+data "aws_availability_zones" "zones" {
+  filter {
+    name = "opt-in-status"
+    values = ["opt-in-not-required"]
+  }
+}
+data "describe-instance-type-offerings" "my_instance_filter" {
+  for_each = data.aws_availability_zones.zones.names
+  filter {
+    name = "instance-type"
+    values = ["t3.micro"]
+  }
+  filter {
+    name = "location"
+    values = [each.key]
+  }
+  location_type = "availability-zone"
+}
+
+output "output_v1_1" {
+  #value = data.describe-instance-type-offerings.my_instance_filter.instance_types
+  value = toset([for t in data.describe-instance-type-offerings.my_instance_filter: t.instance_types])
+}
+# map Key:Value sa-east-1: t3.micro
+output "output_v1_2" {
+  value = keys({
+    for az, detail in data.describe-instance-type-offerings.my_instance_filter: az => detail.instance_types if length(detail.instance_types) != 0
+  })#[0]
+}
+resource "my_instance" {
+  instance_type = var.my_list[1] # t3.small
+  instance_type = var.my_map["prod"] # t3.large
+  for_each = toset(keys({
+    for az, detail in data.describe-instance-type-offerings.my_instance_filter: az => detail.instance_types if length(detail.instance_types) != 0
+  }))
+  availability_zone = each.key
+  tags = {
+    name = "meho-${each.key}"
+  }
+}
+----
