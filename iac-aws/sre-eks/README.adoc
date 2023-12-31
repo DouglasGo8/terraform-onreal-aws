@@ -54,7 +54,7 @@ provider "aws" {
 .Apache Camel/Quarkus on AWS EKS Fargate and S3 File Process with terraform
 image::../../thumbs/common/camel-s3-ecs-task-process.png[]
 
-== Terraform Command Basics
+=== Terraform Command Basics
 
 * Terraform workflow
 
@@ -91,6 +91,24 @@ apply the changes appropriately
 
 |===
 
+[%header,cols=2*]
+|===
+|Provisioner
+|Description
+
+|File Provisioner
+|File Provisioner is used to _copy files or directories_ from the _machine executing Terraform_ to the _newly created resource_
+
+|remote-exec Provisioner
+|The _remote-exec_ provisioner _invokes a script on a remote resource_ after it is _created_
+
+|local-exec Provisioner
+|The _local-exec_ provisioner _invokes a local executable_ after a resource _is created_. This invokes a _process on the machine-running terraform_, not on the resource
+
+|null-resource
+|If you need to run provisioners _that aren't directly associated_ with a specific resource, you can associate them with a _null_resource_. Instances of _null_resource_ are treated like normal resources, but they _don't do anything_. Same as other resource, you can configure _provisioners_ and _connection_ _details_ on a _null_resources_.
+|===
+
 - https://github.com/stacksimplify/terraform-on-aws-eks/tree/main/04-Terraform-Variables-and-Datasources[Github link EC2 Instance]
 
 .TF Log4 Apply Command
@@ -99,6 +117,11 @@ image::../../thumbs/sre-eks/section02/basic-ec2instance.png[]
 link:../sre-eks/section02/ec2/instance.tf[EC2 AWS Instance SSH and HTTP on Public Subnet]
 
 image:../../thumbs/sre-eks/section03/ssh-ec2linux-console.png[]
+
+
+=== Terraform Provisioners
+
+. Provisioners can be used to model specific actions on the local machine or on a remote machine to prepare servers
 
 [source,bash]
 ----
@@ -161,7 +184,7 @@ output "for_output_map2" {
 }
 ----
 
-.Datasources and for_each Meta-Argument
+.Datasource's and for_each Meta-Argument
 [source,hcl-terraform]
 ----
 data "aws_availability_zones" "zones" {
@@ -242,3 +265,30 @@ resource "my_instance" {
   }
 }
 ----
+
+=== AWS VPC 3 tier Architecture
+
+.3Tier APP v1
+image::../../thumbs/sre-eks/section06/3tier-app-reactJsAndEKSv1.png[]
+
+=== Terraform Modules
+
+* Modules are _containers for multiple resources_ that are used together.
+A module consists of a collection of _.tf_ files kept together in a directory
+
+.Terraform .-var-file argument without .auto option
+[source,bash]
+----
+tf plan/apply -var-file {{file.tfvars}}
+----
+
+=== AWS EC2 Bastion Host
+
+.Ec2 Bastion Instance and Null-resource
+image::../../thumbs/sre-eks/section07/bastion-createdInstance.png[]
+
+.Ec2 Bastion Instance Connected
+image::../../thumbs/sre-eks/section07/bastion-instance-connected.png[]
+
+.Ec2 Bastion /tmp Directory
+image::../../thumbs/sre-eks/section07/bastion_key_pem-dir.png[]
