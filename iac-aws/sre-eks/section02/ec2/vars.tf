@@ -10,7 +10,7 @@ variable "instance_count" {
 }
 
 variable "instance_type" {
-  default = "t3.micro"
+  default = "t2.medium"
 }
 
 variable "vpc_id" {

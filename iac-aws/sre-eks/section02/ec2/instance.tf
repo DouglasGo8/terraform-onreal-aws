@@ -14,11 +14,12 @@ provider "aws" {
   profile = var.profile
 }
 
-resource "aws_instance" "t2-nano-demo" {
+# VPC Default creation is Mandatory
+resource "aws_instance" "t2-medium-demo" {
   count                  = var.instance_count
   ami                    = data.aws_ami.amzn2.id
   instance_type          = var.instance_type
-  vpc_security_group_ids = ["${data.aws_security_group.allow-ssh-http.id}"]
+  vpc_security_group_ids = [data.aws_security_group.allow-ssh-http.id]
   key_name               = aws_key_pair.key-pub.key_name
   user_data              = <<EOF
     #!/bin/bash

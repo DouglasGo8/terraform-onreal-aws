@@ -24,7 +24,7 @@ data "aws_ami" "amzn2" {
 
 }
 
-# ssh rule own IP
+# ssh rule own IP Based on Default VPC
 data "aws_security_group" "allow-ssh-http" {
   id = "sg-0170fea9dbd363194"
 }

@@ -9,6 +9,8 @@
 - https://github.com/stacksimplify/terraform-on-aws-eks[Git Repo Course]
 - https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli[Install Terraform MacOs]
 - https://registry.terraform.io/namespaces/hashicorp[Hashicorp Cloud Providers Version]
+- https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html[Amazon EKS Kubernetes versions]
+- https://medium.com/@tech_18484/step-by-step-guide-creating-an-eks-cluster-with-terraform-resources-iam-roles-for-service-df1c5e389811[Creating an EKS Cluster]
 
 == _Section 01_
 
@@ -292,3 +294,39 @@ image::../../thumbs/sre-eks/section07/bastion-instance-connected.png[]
 
 .Ec2 Bastion /tmp Directory
 image::../../thumbs/sre-eks/section07/bastion_key_pem-dir.png[]
+
+=== EKS Introduction Basics
+
+image:../../thumbs/sre-eks/section08/tf-eks-api.png[300,300, rule=left]
+image:../../thumbs/sre-eks/section08/tfeks-module.png[500,600]
+
+.AWS EKS Resources in High level (Pre-requisites Resource and EKS Workload)
+[%header,cols=4*]
+|===
+|VPC
+|Bastion Host
+|EKS Cluster
+|EKS Node group
+
+|Subnets (Public/Private)
+|Bastion Host EC2 Instance
+|EKS Cluster IAM Roles
+|EKS Node Group IAM Role
+
+|Route Tables
+|Bastion Host SG
+|EKS Cluster SGs
+|EKS Node Group SGs
+
+|Nat Gateway + EIP
+|Bastion Host EIP
+|EKS Network Interface
+|EKS Node Group Network Interface
+
+|Internet Gateway
+|N/A
+|EKS Cluster
+|EKS Work Nodes EC2 Instances
+
+|===
+
